@@ -15,9 +15,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "JumpGP",
+                    "name": "BasicAttack",
                     "type": "Button",
-                    "id": "5df60db3-adf7-42b4-bc46-0597af996a61",
+                    "id": "f3b5fdb2-a0d1-435b-a16f-945fd2f2ca1e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -38,12 +38,34 @@
                 },
                 {
                     "name": "",
-                    "id": "b532bea8-3f48-44eb-b90b-fa5695d4a77f",
+                    "id": "139fa082-e2be-4b35-99ca-630e7e1ec2f1",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "JumpGP",
+                    "action": "JumpKB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "04c46c93-17ae-4236-941a-8aeea144df26",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "BasicAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "57a1ffe3-5010-48a4-8418-fc099bca3f0b",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "BasicAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
