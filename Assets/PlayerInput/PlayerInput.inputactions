@@ -6,7 +6,7 @@
             "id": "6c80842a-99ef-4a91-8403-d0abc5071613",
             "actions": [
                 {
-                    "name": "JumpKB",
+                    "name": "Jump",
                     "type": "Button",
                     "id": "82610b69-f9a0-4f98-998f-8134ff2feab0",
                     "expectedControlType": "Button",
@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "UseJetpack",
+                    "type": "Button",
+                    "id": "c1e35862-bd14-48ea-832b-e152f737f5dd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -32,7 +41,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "JumpKB",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -43,7 +52,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "JumpKB",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -66,6 +75,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "BasicAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e4a7aa86-6ef8-43af-a7f7-98b817378d22",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "UseJetpack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "337c13f9-407d-4db4-805b-c46a9ba571d2",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "UseJetpack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

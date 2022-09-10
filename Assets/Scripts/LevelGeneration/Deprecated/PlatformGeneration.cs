@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlatformGeneration : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlatformGeneration : MonoBehaviour
 
     ObjectPooling pool1;
     ObjectPooling pool2;
+    ObjectPooling starts;
 
     public List<Platform> platformPrefabs;
 
@@ -19,11 +21,11 @@ public class PlatformGeneration : MonoBehaviour
 
     public bool currentlySpawning = false;
 
-    float randomY;
-    float randomNumberOfPlatformsInARow;
+    int randomY;
+    int lastRandomY = 5;
+    int randomNumberOfPlatformsInARow;
 
-    public float counter1;
-    public float counter2;
+    public int startsCounter;
 
 
     private void Awake()
@@ -47,12 +49,19 @@ public class PlatformGeneration : MonoBehaviour
 
         pool1 = new ObjectPooling();
         pool2 = new ObjectPooling();
+        starts = new ObjectPooling();
+
+        for (int i = 0; i < starts.poolLimit; i++)
+        {
+            starts.platformPool.Add(Instantiate(platformPrefabs[3], new Vector2(0, -500), spawnRotation));
+            starts.platformPool[i].gameObject.SetActive(false);
+        }
 
         //Fill up and instantiate pool 1
 
         for (int i = 0; i < pool1.poolLimit; i++)
         {
-            pool1.platformPool.Add(Instantiate(platformPrefabs[Random.Range(0, 5)], currentPosition, spawnRotation));
+            pool1.platformPool.Add(Instantiate(platformPrefabs[Random.Range(0, 2)], currentPosition, spawnRotation));
             currentPosition.x++;
         }
 
@@ -62,7 +71,7 @@ public class PlatformGeneration : MonoBehaviour
 
         for (int i = 0; i < pool2.poolLimit; i++)
         {
-            pool2.platformPool.Add(Instantiate(platformPrefabs[Random.Range(0, 5)], currentPosition, spawnRotation));
+            pool2.platformPool.Add(Instantiate(platformPrefabs[Random.Range(0, 2)], currentPosition, spawnRotation));
             currentPosition.x++;
         }
 
@@ -71,8 +80,6 @@ public class PlatformGeneration : MonoBehaviour
 
     private void Update()
     {
-        counter1 = pool1.middleOfABlock;
-        counter2 = pool2.middleOfABlock;
         currentXPlayer = playerLocation.position.x;
 
         // if the player is close to the next block, start generating from the pool
@@ -88,43 +95,51 @@ public class PlatformGeneration : MonoBehaviour
         }
     }
 
-    void GenTest1()
-    {
-        for (int i = 0; i < pool2.poolLimit; i++)
-        {
-            pool1.platformPool[i].transform.position = currentPosition;
-            currentPosition.x++;
-        }
-
-        pool1.middleOfABlock = (pool1.platformPool[pool1.poolLimit - 1].transform.position.x + pool1.platformPool[0].transform.position.x) / 2;
-
-        currentlySpawning = false;
-    }
-
-    void GenTest2()
-    {
-        for (int i = 0; i < pool2.poolLimit; i++)
-        {
-            pool2.platformPool[i].transform.position = currentPosition;
-            currentPosition.x++;
-        }
-        pool2.middleOfABlock = (pool2.platformPool[pool2.poolLimit - 1].transform.position.x + pool2.platformPool[0].transform.position.x) / 2;
-
-        currentlySpawning = false;
-
-    }
-
     void GenerateNextBlock2()
     {
         for (int i = 0; i < pool2.poolLimit; i++)
         {
             randomY = Random.Range(-5, 15);
+            if (Mathf.Abs(randomY - lastRandomY) < 5)
+            {
+                if (randomY >= lastRandomY)
+                {
+                    randomY += 5;
+                }
+                if (randomY < lastRandomY)
+                {
+                    randomY -= 5;
+                }
+            }
+            if (Mathf.Abs(randomY - lastRandomY) > 10)
+            {
+                if (randomY >= lastRandomY)
+                {
+                    randomY -= 5;
+                }
+                if (randomY < lastRandomY)
+                {
+                    randomY += 5;
+                }
+            }
+
+            lastRandomY = randomY;
             randomNumberOfPlatformsInARow = Random.Range(5, 20);
             currentPosition.y = randomY;
+            starts.platformPool[startsCounter].gameObject.SetActive(true);
+            starts.platformPool[startsCounter].transform.position = currentPosition;
+            startsCounter++;
+            if (startsCounter >= starts.poolLimit)
+            {
+                startsCounter = 0;
+            }
+            currentPosition.x++;
+
             if (i + randomNumberOfPlatformsInARow > pool1.poolLimit)
             {
                 randomNumberOfPlatformsInARow = pool2.poolLimit - i;
             }
+
             for (int j = 0; j < randomNumberOfPlatformsInARow; j++)
             {
                 pool2.platformPool[i].transform.position = currentPosition;
@@ -146,8 +161,42 @@ public class PlatformGeneration : MonoBehaviour
         for (int i = 0; i < pool1.poolLimit; i++)
         {
             randomY = Random.Range(-5, 15);
+
+            if (Mathf.Abs(randomY - lastRandomY) < 5)
+            {
+                if (randomY >= lastRandomY)
+                {
+                    randomY += 5;
+                }
+                if (randomY < lastRandomY)
+                {
+                    randomY -= 5;
+                }
+            }
+            if (Mathf.Abs(randomY - lastRandomY) > 10)
+            {
+                if (randomY >= lastRandomY)
+                {
+                    randomY -= 5;
+                }
+                if (randomY < lastRandomY)
+                {
+                    randomY += 5;
+                }
+            }
+
+            lastRandomY = randomY;
             randomNumberOfPlatformsInARow = Random.Range(5, 20);
             currentPosition.y = randomY;
+            starts.platformPool[startsCounter].gameObject.SetActive(true);
+            starts.platformPool[startsCounter].transform.position = currentPosition;
+            startsCounter++;
+            if (startsCounter >= starts.poolLimit)
+            {
+                startsCounter = 0;
+            }
+            currentPosition.x++;
+
             if (i + randomNumberOfPlatformsInARow > pool1.poolLimit)
             {
                 randomNumberOfPlatformsInARow = pool1.poolLimit - i;

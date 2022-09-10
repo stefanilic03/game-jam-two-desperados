@@ -1,18 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour, PlayerEntity
 {
+    public Animator animator;
+    static Player player;
+
+    public static UnityAction death;
+
     public float MaximumHealthPoints { get; set; }
     public float CurrentHealthPoints { get; set; }
     public float HealthDepletionMultiplier { get; set; }
-    public bool IsDead { get; set; }
+
+    //int minimunHealFromDefeatedEnemy = 25;
+    //int maximunHealFromDefeatedEnemy = 40;
+
+    const string deathAnimation = "death";
 
     void Awake()
     {
+        player = this;
+
+        death += Death;
+
         MaximumHealthPoints = 100;
-        IsDead = false;
         SetCurrentHealthToMaximum();
     }
 
@@ -33,6 +46,6 @@ public class Player : MonoBehaviour, PlayerEntity
 
     public void Death()
     {
-
+        animator.Play(deathAnimation);
     }
 }

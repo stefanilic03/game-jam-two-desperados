@@ -9,6 +9,11 @@ public class ObjectPooling
         
     }
 
+    public ObjectPooling(int poolLimit)
+    {
+        this.poolLimit = poolLimit;
+    }
+
     public ObjectPooling(List<Platform> platformPool, int poolLimit, float middleOfABlock)
     {
         this.platformPool = platformPool;

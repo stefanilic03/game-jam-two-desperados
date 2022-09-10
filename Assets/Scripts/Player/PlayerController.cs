@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
 
     //Check to see if the player is currently touching the ground
+    public Transform groundCheck;
+    public float groundCheckSize = 0.2f;
     public bool grounded;
     public LayerMask whatIsGround;
 
@@ -28,6 +30,10 @@ public class PlayerController : MonoBehaviour
     public float currentBasicAttackCooldown;
     public float basicAttackCooldown;
 
+    //Jetpack
+    public bool playerHoldingTheJetpackButton = false;
+    public float jetpackForce;
+
     //Has the game started yet
     public bool hasStarted = false;
 
@@ -36,12 +42,14 @@ public class PlayerController : MonoBehaviour
     const string groundedParam = "grounded";
     const string isFallingParam = "isFalling";
     const string currentlyAttackingParam = "currentlyAttacking";
+    const string playerHoldingTheJetpackButtonParam = "jetpackButtonHeld";
 
 
     private void FixedUpdate()
     {
         grounded = false;
-        if (rigidBody2D.IsTouchingLayers(whatIsGround))
+        Collider2D[] groundHits = Physics2D.OverlapCircleAll(groundCheck.position, groundCheckSize, whatIsGround);
+        if (groundHits.Length > 0)
         {
             grounded = true;
             jumpsAvailable = 2f;
@@ -56,11 +64,17 @@ public class PlayerController : MonoBehaviour
             isFalling = true;
         }
 
+        if (playerHoldingTheJetpackButton)
+        {
+            rigidBody2D.AddForce(Vector2.up * jetpackForce);
+        }
+
         //Set animation parameters
         animator.SetBool(groundedParam, grounded);
         animator.SetBool(isFallingParam, isFalling);
         animator.SetFloat(currentSpeedParam, currentSpeed);
         animator.SetBool(currentlyAttackingParam, currentlyAttacking);
+        animator.SetBool(playerHoldingTheJetpackButtonParam, playerHoldingTheJetpackButton);
     }
 
     public void OnJump(InputAction.CallbackContext callbackContext)
@@ -81,8 +95,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnJetpackUse(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.performed)
+        {
+            playerHoldingTheJetpackButton = true;
+        }
+        if (callbackContext.canceled)
+        {
+            playerHoldingTheJetpackButton = false;
+        }
+    }
+
     public void StopAttacking_AnimationEvent()
     {
         currentlyAttacking = false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(groundCheck.position, groundCheckSize);
     }
 }
