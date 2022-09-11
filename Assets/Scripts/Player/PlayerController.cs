@@ -5,13 +5,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    //public InputAction inputActions;
     public Rigidbody2D rigidBody2D;
     public Animator animator;
 
     //Check to see if the player is currently touching the ground
     public Transform groundCheck;
-    public float groundCheckSize = 0.2f;
+    public float groundCheckSize = 0.23f;
     public bool grounded;
     public LayerMask whatIsGround;
 
@@ -44,7 +43,6 @@ public class PlayerController : MonoBehaviour
     const string currentlyAttackingParam = "currentlyAttacking";
     const string playerHoldingTheJetpackButtonParam = "jetpackButtonHeld";
 
-
     private void FixedUpdate()
     {
         grounded = false;
@@ -72,9 +70,9 @@ public class PlayerController : MonoBehaviour
         //Set animation parameters
         animator.SetBool(groundedParam, grounded);
         animator.SetBool(isFallingParam, isFalling);
-        animator.SetFloat(currentSpeedParam, currentSpeed);
         animator.SetBool(currentlyAttackingParam, currentlyAttacking);
         animator.SetBool(playerHoldingTheJetpackButtonParam, playerHoldingTheJetpackButton);
+        animator.SetFloat(currentSpeedParam, currentSpeed);
     }
 
     public void OnJump(InputAction.CallbackContext callbackContext)

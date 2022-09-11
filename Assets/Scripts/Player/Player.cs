@@ -8,7 +8,9 @@ public class Player : MonoBehaviour, PlayerEntity
     public Animator animator;
     static Player player;
 
-    public static UnityAction death;
+    public static UnityAction takeDamage;
+
+    float randomDamageTaken;
 
     public float MaximumHealthPoints { get; set; }
     public float CurrentHealthPoints { get; set; }
@@ -23,7 +25,7 @@ public class Player : MonoBehaviour, PlayerEntity
     {
         player = this;
 
-        death += Death;
+        takeDamage += TakeDamage;
 
         MaximumHealthPoints = 100;
         SetCurrentHealthToMaximum();
@@ -44,8 +46,16 @@ public class Player : MonoBehaviour, PlayerEntity
         CurrentHealthPoints = MaximumHealthPoints;
     }
 
-    public void Death()
+    public void TakeDamage()
     {
-        animator.Play(deathAnimation);
+        CurrentHealthPoints -= randomDamageTaken;
+        if (CurrentHealthPoints <= 0)
+        {
+            animator.Play(deathAnimation);
+            //Finish run
+            return;
+        }
+
+        
     }
 }
