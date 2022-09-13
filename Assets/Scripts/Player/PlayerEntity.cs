@@ -7,6 +7,5 @@ public interface PlayerEntity
     float MaximumHealthPoints { get; set; }
     float CurrentHealthPoints { get; set; }
     void SetCurrentHealthToMaximum();
-    void SetCurrentHealth(float health);
     void HealHealth();
 }

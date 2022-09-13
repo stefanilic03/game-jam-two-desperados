@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour, IEnemy
 
     const string deathAnimation = "death";
 
+    int deathAnimationDelay = 1;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -24,7 +26,7 @@ public class Enemy : MonoBehaviour, IEnemy
     IEnumerator Death()
     {
         animator.Play(deathAnimation);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(deathAnimationDelay);
         this.gameObject.SetActive(false);
     }
 }

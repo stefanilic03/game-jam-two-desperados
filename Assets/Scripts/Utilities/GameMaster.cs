@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -9,11 +7,14 @@ public class GameMaster : MonoBehaviour
 
     public TMP_Text highScoreText;
 
-    public float currentScore = 0f;
-    public float difficultyMultiplier = 1f;
+    public static float currentScore = 0f;
+    public float baseScoreMultiplier = 3f;
+    public static float difficultyMultiplier = 1f;
     int extraOomphOnTheScore = 10;
 
-    public Transform player;
+    public bool gameIsOn = true;
+
+    public Player player;
 
     private void Awake()
     {
@@ -26,25 +27,30 @@ public class GameMaster : MonoBehaviour
         {
             gameMaster = this;
         }
+
+        DontDestroyOnLoad(gameObject);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        highScoreText.text = ((int)currentScore).ToString();
-
-        if (player != null)
+        if (player != null && highScoreText != null && !player.gamePaused && gameIsOn)
         {
-            currentScore = Time.realtimeSinceStartup * difficultyMultiplier * extraOomphOnTheScore;
+            currentScore += 3 * difficultyMultiplier * extraOomphOnTheScore;
+            highScoreText.text = ((int)currentScore).ToString();
             return;
-        }
-        SearchForPlayer();
+        }        
+        SearchForPlayerAndText();
     }
 
-    void SearchForPlayer()
+    void SearchForPlayerAndText()
     {
         if (GameObject.FindGameObjectWithTag(TagsDatabase.playerTag) != null)
         {
-            player = GameObject.FindGameObjectWithTag(TagsDatabase.playerTag).transform;
+            player = GameObject.FindGameObjectWithTag(TagsDatabase.playerTag).GetComponent<Player>();
+        }
+        if (GameObject.FindGameObjectWithTag(TagsDatabase.highScoreTextTag) != null)
+        {
+            highScoreText = GameObject.FindGameObjectWithTag(TagsDatabase.highScoreTextTag).GetComponent<TMP_Text>();
         }
     }
 }

@@ -45,13 +45,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        grounded = false;
-        Collider2D[] groundHits = Physics2D.OverlapCircleAll(groundCheck.position, groundCheckSize, whatIsGround);
-        if (groundHits.Length > 0)
-        {
-            grounded = true;
-            jumpsAvailable = 2;
-        }
+        GroundCheck();
 
         isFalling = false;
         if (rigidBody2D.velocity.y < -2)
@@ -60,18 +54,35 @@ public class PlayerController : MonoBehaviour
             rigidBody2D.AddForce(Vector2.down * fallFasterForce);
         }
 
-        if (playerHoldingTheJetpackButton && jetpackBar.currentJetpackFuel > 0)
-        {
-            jetpackBar.currentJetpackFuel -= 4f;
-            jetpackBar.regenerationDelay = Time.time + 0.75f;
-            rigidBody2D.AddForce(Vector2.up * jetpackForce);
-        }
+        //If the player is holding the jetpack button, slowly deplete the jetpack fuel
+        JetpackButtonHoldCheck();
 
         //Set animation parameters
         animator.SetBool(groundedParam, grounded);
         animator.SetBool(isFallingParam, isFalling);
         animator.SetBool(currentlyAttackingParam, currentlyAttacking);
         animator.SetBool(playerHoldingTheJetpackButtonParam, playerHoldingTheJetpackButton);
+    }
+
+    private void GroundCheck()
+    {
+        grounded = false;
+        Collider2D[] groundHits = Physics2D.OverlapCircleAll(groundCheck.position, groundCheckSize, whatIsGround);
+        if (groundHits.Length > 0)
+        {
+            grounded = true;
+            jumpsAvailable = 2;
+        }
+    }
+
+    private void JetpackButtonHoldCheck()
+    {
+        if (playerHoldingTheJetpackButton && jetpackBar.currentJetpackFuel > 0)
+        {
+            jetpackBar.currentJetpackFuel -= 4f;
+            jetpackBar.regenerationDelay = Time.time + 0.75f;
+            rigidBody2D.AddForce(Vector2.up * jetpackForce);
+        }
     }
 
     public void OnJump(InputAction.CallbackContext callbackContext)
