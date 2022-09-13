@@ -9,15 +9,11 @@ public class CameraFollow : MonoBehaviour
     public float cameraOffsetX;
     public float cameraOffsetY;
 
-    bool startingZoom = true;
-
     private void LateUpdate()
     {
-        if (startingZoom)
+        if (target != null)
         {
-
+            transform.position = new Vector3(target.position.x + cameraOffsetX, /*target.position.y +*/ cameraOffsetY, transform.position.z);
         }
-
-        transform.position = new Vector3(target.position.x + cameraOffsetX, target.position.y + cameraOffsetY, transform.position.z);
     }
 }

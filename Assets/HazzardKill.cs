@@ -7,7 +7,8 @@ using UnityEngine.Events;
 public class HazzardKill : MonoBehaviour
 {
     [SerializeField]
-    private UnityEvent death;
+    private UnityEvent playerTakeDamage;
+    public Enemy enemy;
 
     private void Reset()
     {
@@ -16,14 +17,20 @@ public class HazzardKill : MonoBehaviour
 
     private void Start()
     {
-        death.AddListener(Player.takeDamage);
+        playerTakeDamage.AddListener(Player.takeDamage);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            death.Invoke();
+            if (enemy.InTheTimeTunnel)
+            {
+                enemy.DestroyEnemy();
+                return;
+            }
+
+            playerTakeDamage.Invoke();
         }
     }
 }

@@ -55,6 +55,10 @@ public class EnemyGeneration : MonoBehaviour
 
     void GenerateEnemies()
     {
+        if (playerLocation == null)
+        {
+            return;
+        }
         randomNumberOfEnemies = Random.Range(4, 10);
         for (int i = 0; i < randomNumberOfEnemies; i++)
         {
@@ -78,6 +82,13 @@ public class EnemyGeneration : MonoBehaviour
             {
                 spawnLocation.y = spawnLocationY;
             }
+
+            if (GetComponent<Animator>().enabled == false)
+            {
+                pool.enemyPool[currentEnemyPoolIndex].GetComponent<Animator>().enabled = true;
+            }
+            pool.enemyPool[currentEnemyPoolIndex].GetComponent<Enemy>().InTheTimeTunnel = false;
+            pool.enemyPool[currentEnemyPoolIndex].GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
 
             if (!pool.enemyPool[currentEnemyPoolIndex].gameObject.activeInHierarchy)
             {

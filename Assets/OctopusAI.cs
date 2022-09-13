@@ -41,8 +41,7 @@ public class OctopusAI : MonoBehaviour
         directionX = Random.Range(-1, 2);
         if (directionY == 0 && directionX == 0)
         {
-            ChooseNextDirection();
-            return;
+            directionX = -1;
         }
         movement = new Vector2(directionX * movementSpeed, directionY * movementSpeed);
     }

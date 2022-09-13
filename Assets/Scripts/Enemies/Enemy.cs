@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour, IEnemy
     Animator animator;
 
     public bool flyingEnemy = false;
+    public bool InTheTimeTunnel { get; set; }
 
     const string deathAnimation = "death";
 
@@ -24,6 +25,6 @@ public class Enemy : MonoBehaviour, IEnemy
     {
         animator.Play(deathAnimation);
         yield return new WaitForSeconds(2f);
-        //Add back to pool, disable
+        this.gameObject.SetActive(false);
     }
 }

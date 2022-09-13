@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
     public Rigidbody2D rigidBody2D;
-    public Animator animator;
+    public Animator animator;  
+
+    public JetpackResourceBar jetpackBar;
+    public float maximumJetpackStamina;
+    public float currentJetpackStamina;
 
     //Check to see if the player is currently touching the ground
     public Transform groundCheck;
@@ -14,15 +19,11 @@ public class PlayerController : MonoBehaviour
     public bool grounded;
     public LayerMask whatIsGround;
 
-    //Movement
-    public float movementSpeed;
-    public float speedMultiplier;
-    public float currentSpeed;
-
     //Jump
-    public float jumpsAvailable = 2f;
+    public int jumpsAvailable = 2;
     public float jumpForce;
     public bool isFalling = false;
+    public float fallFasterForce;
 
     //Attacking
     public bool currentlyAttacking = false;
@@ -37,7 +38,6 @@ public class PlayerController : MonoBehaviour
     public bool hasStarted = false;
 
     //Animation parameters
-    const string currentSpeedParam = "currentSpeed";
     const string groundedParam = "grounded";
     const string isFallingParam = "isFalling";
     const string currentlyAttackingParam = "currentlyAttacking";
@@ -50,20 +50,20 @@ public class PlayerController : MonoBehaviour
         if (groundHits.Length > 0)
         {
             grounded = true;
-            jumpsAvailable = 2f;
+            jumpsAvailable = 2;
         }
-
-        rigidBody2D.velocity = new Vector2(movementSpeed * speedMultiplier, rigidBody2D.velocity.y);
-        currentSpeed = rigidBody2D.velocity.x;
 
         isFalling = false;
         if (rigidBody2D.velocity.y < -2)
         {
             isFalling = true;
+            rigidBody2D.AddForce(Vector2.down * fallFasterForce);
         }
 
-        if (playerHoldingTheJetpackButton)
+        if (playerHoldingTheJetpackButton && jetpackBar.currentJetpackFuel > 0)
         {
+            jetpackBar.currentJetpackFuel -= 4f;
+            jetpackBar.regenerationDelay = Time.time + 0.75f;
             rigidBody2D.AddForce(Vector2.up * jetpackForce);
         }
 
@@ -72,7 +72,6 @@ public class PlayerController : MonoBehaviour
         animator.SetBool(isFallingParam, isFalling);
         animator.SetBool(currentlyAttackingParam, currentlyAttacking);
         animator.SetBool(playerHoldingTheJetpackButtonParam, playerHoldingTheJetpackButton);
-        animator.SetFloat(currentSpeedParam, currentSpeed);
     }
 
     public void OnJump(InputAction.CallbackContext callbackContext)
@@ -98,6 +97,7 @@ public class PlayerController : MonoBehaviour
         if (callbackContext.performed)
         {
             playerHoldingTheJetpackButton = true;
+            rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, 0);
         }
         if (callbackContext.canceled)
         {
@@ -114,4 +114,5 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckSize);
     }
+
 }

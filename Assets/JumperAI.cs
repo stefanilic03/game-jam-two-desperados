@@ -14,14 +14,16 @@ public class JumperAI : MonoBehaviour
     public float attackTimer;
     public float attackLength;
     public float attackHeight;
+    Vector2 jump;
 
+    public GameObject attackIndicator;
 
     const string idleAnimation = "idle";
     const string jumpAttackAnimation = "jumpAttack";
 
     private void Awake()
     {
-        InvokeRepeating(nameof(JumpAttack), 3.5f, 5); 
+        InvokeRepeating(nameof(ShowAttackIndicatorThenAttack), 3.5f, 3); 
     }
 
     private void FixedUpdate()
@@ -36,10 +38,21 @@ public class JumperAI : MonoBehaviour
         animator.Play(idleAnimation);
     }
 
-    void JumpAttack()
+    void ShowAttackIndicatorThenAttack()
+    {   
+        if (gameObject.activeInHierarchy)
+        {
+            attackIndicator.SetActive(true);
+            StartCoroutine(Attack());
+        }
+    }
+
+    IEnumerator Attack()
     {
-        Vector2 jjump = new Vector2(rigidBody2D.velocity.x - attackLength, rigidBody2D.velocity.y + attackHeight);
-        rigidBody2D.AddForce(jjump, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(attackTimer);
+        jump = new Vector2(rigidBody2D.velocity.x - attackLength, rigidBody2D.velocity.y + attackHeight);
+        rigidBody2D.AddForce(jump, ForceMode2D.Impulse);
+        attackIndicator.SetActive(false);
     }
 
     void GroundCheck()
