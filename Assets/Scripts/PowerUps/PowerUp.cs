@@ -20,6 +20,8 @@ public class PowerUp : MonoBehaviour
     public bool redOrBlue = true;
     int disableDelay = 2;
 
+    public int numberOfPointsOnPickup;
+
     private void Reset()
     {
         GetComponent<CircleCollider2D>().isTrigger = true;
@@ -31,6 +33,8 @@ public class PowerUp : MonoBehaviour
 
         healPlayer.AddListener(player.healthPowerUp);
         regenerateJetpackFuelPlayer.AddListener(player.jetpackPowerUp);
+
+        numberOfPointsOnPickup *= (int)GameMaster.difficultyMultiplier;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -40,6 +44,7 @@ public class PowerUp : MonoBehaviour
             HealOrRegenerateJetpackFuel();
             sfx.Play();
             spriteRenderer.enabled = false;
+            GameMaster.currentScore += numberOfPointsOnPickup;
             StartCoroutine(DisableObjectDelay());
         }
     }

@@ -181,7 +181,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6841388845649422488}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.414, z: 0}
+  m_LocalPosition: {x: 0, y: -1.391, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -220,14 +220,14 @@ Transform:
   m_GameObject: {fileID: 6841388845658402155}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 21.12, y: 36.9, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6841388845289217113}
   - {fileID: 6841388845649422487}
   - {fileID: 6841388844082699300}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6841388845658402152
 MonoBehaviour:
@@ -247,7 +247,7 @@ MonoBehaviour:
   maximumJetpackStamina: 0
   currentJetpackStamina: 0
   groundCheck: {fileID: 6841388845649422487}
-  groundCheckSize: 0.23
+  groundCheckSize: 0.1
   grounded: 0
   whatIsGround:
     serializedVersion: 2
@@ -275,13 +275,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 6841388845658402152}
+  playerInput: {fileID: 6841388845658402150}
   rigidBody2D: {fileID: 6841388845658402148}
+  jetpackBar: {fileID: 0}
   inTheTimeTunnel: 0
-  playerLayer: Player
-  groundLayer: Ground
   platformCollisionCooldown: 0
   animator: {fileID: 6841388845658402154}
   backgroundTintWhileInATunnel: {fileID: 0}
+  deathMenu: {fileID: 0}
+  currentScoreDeathMenuText: {fileID: 0}
   defaultMovementSpeed: 0
   movementSpeed: 15
   speedMultiplier: 1
@@ -291,6 +293,8 @@ MonoBehaviour:
   pauseMenu: {fileID: 0}
   gamePaused: 0
   resumeButton: {fileID: 0}
+  retryButton: {fileID: 0}
+  endGame: 0
 --- !u!212 &6841388845658402153
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -492,6 +496,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: a3b2f36f-dd17-47bc-8033-c8632f3432d2
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6841388845658402147}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: PauseGame
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 32287244-0793-46b7-b6f0-24d9bc82a6b0
+    m_ActionName: UI/PauseGame[/Keyboard/escape,/XInputControllerWindows/start]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: PlayerActions

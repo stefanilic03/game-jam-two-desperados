@@ -125,26 +125,26 @@ public class PlatformGeneration : MonoBehaviour
             //Choose random Y spawn coordinate and make sure that the next Y is more than 5, but less than 11 units apart from the lastRandomY -> next Y must be in lastRandomY +- 6 range
             //This is important so the platforms don't overlap and make the player get stuck somewhere and not able to move forward
             randomY = Random.Range(-5, 15);
-            if (Mathf.Abs(randomY - lastRandomY) < 5)
+            if (Mathf.Abs(randomY - lastRandomY) < 7)
             {
                 if (randomY >= lastRandomY)
                 {
-                    randomY += 5;
+                    randomY += 7;
                 }
                 if (randomY < lastRandomY)
                 {
-                    randomY -= 5;
+                    randomY -= 7;
                 }
             }
-            if (Mathf.Abs(randomY - lastRandomY) > 10)
+            if (Mathf.Abs(randomY - lastRandomY) > 12)
             {
                 if (randomY >= lastRandomY)
                 {
-                    randomY -= 5;
+                    randomY -= 7;
                 }
                 if (randomY < lastRandomY)
                 {
-                    randomY += 5;
+                    randomY += 7;
                 }
             }
             lastRandomY = randomY;
@@ -168,13 +168,15 @@ public class PlatformGeneration : MonoBehaviour
             }
 
             //Set the position of the first platform
+            //Starting platforms are 2 units wide, so increasing the current position by 1 is needed before and after placing the first platform
+            currentPosition.x++;
             starts.platformPool[startsCounter].transform.position = currentPosition;
             startsCounter++;
             if (startsCounter >= starts.poolLimit)
             {
                 startsCounter = 0;
             }
-            //Update the position so the next platform is placed one unit to the right
+            //Update the position so the next platform is placed 1 unit to the right
             currentPosition.x++;
 
             //If there should be more than 5 platforms in a row, but the pool would be overflown, limit the number of platforms to pool limit
@@ -217,7 +219,7 @@ public class PlatformGeneration : MonoBehaviour
     private void TimeTunnelGeneration()
     { 
         timeTunnelCreationChance = Random.Range(0, 11);
-        if (timeTunnelCreationChance < 11)
+        if (timeTunnelCreationChance < 4)
         {
             if (!timeTunnelObjectPool.tunnelPool[timeTunnelPoolCounter].gameObject.activeInHierarchy)
             {

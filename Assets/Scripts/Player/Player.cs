@@ -44,7 +44,7 @@ public class Player : MonoBehaviour, PlayerEntity
 
     float randomDamageTaken;
 
-    float healthLossRate = 3f;
+    float healthLossRate = 6f;
 
     public float MaximumHealthPoints { get; set; }
     public float CurrentHealthPoints { get; set; }
@@ -53,8 +53,8 @@ public class Player : MonoBehaviour, PlayerEntity
     public bool gamePaused = false;
     public Button resumeButton;
     public Button retryButton;
-    int minimumHeal = 10;
-    int maximunHeal = 17;
+    int minimumHeal = 22;
+    int maximumHeal = 35;
     public bool endGame = false;
 
     const string deathAnimation = "death";
@@ -81,8 +81,8 @@ public class Player : MonoBehaviour, PlayerEntity
 
         healthBar.SetMaximumHealth(MaximumHealthPoints);
 
-        InvokeRepeating(nameof(GraduallyIncreaseMovementSpeed), 0, 10);
-        InvokeRepeating(nameof(LoseHealthOverTime), 3, 1);
+        InvokeRepeating(nameof(GraduallyIncreaseMovementSpeed), 0, 7);
+        InvokeRepeating(nameof(LoseHealthOverTime), 4, 1.1f);
     }
 
     private void FixedUpdate()
@@ -94,7 +94,7 @@ public class Player : MonoBehaviour, PlayerEntity
 
     private void GraduallyIncreaseMovementSpeed()
     {
-        speedMultiplier += 0.05f;
+        speedMultiplier += 0.08f;
     }
 
     private void InTheTimeTunnel()
@@ -138,7 +138,7 @@ public class Player : MonoBehaviour, PlayerEntity
 
     public void HealHealth()
     {
-        CurrentHealthPoints += Random.Range(minimumHeal, maximunHeal);
+        CurrentHealthPoints += Random.Range(minimumHeal, maximumHeal);
         if (CurrentHealthPoints > MaximumHealthPoints)
         {
             CurrentHealthPoints = MaximumHealthPoints;
@@ -148,7 +148,7 @@ public class Player : MonoBehaviour, PlayerEntity
     
     public void JetpackPowerUp()
     {
-        jetpackBar.currentJetpackFuel += Random.Range(minimumHeal, maximunHeal);
+        jetpackBar.currentJetpackFuel += Random.Range(minimumHeal, maximumHeal);
         if (jetpackBar.currentJetpackFuel > jetpackBar.maximumJetpackFuel)
         {
             jetpackBar.currentJetpackFuel = jetpackBar.maximumJetpackFuel;

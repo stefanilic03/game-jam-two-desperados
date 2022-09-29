@@ -46,7 +46,7 @@ public class EnemyGeneration : MonoBehaviour
         {
             return;
         }
-        randomNumberOfEnemies = Random.Range(4, 10);
+        randomNumberOfEnemies = Random.Range(10, 20);
         for (int i = 0; i < randomNumberOfEnemies; i++)
         {
             if (i == 0)

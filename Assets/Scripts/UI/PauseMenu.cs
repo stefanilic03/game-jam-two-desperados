@@ -30,11 +30,17 @@ public class PauseMenu : MonoBehaviour
         player.playerInput.SwitchCurrentActionMap(PlayerActionMapName);
 
         //Reset the score if it's a new run
+        SetGameSettingsForRetry();
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void SetGameSettingsForRetry()
+    {
         GameMaster.currentScore = 0;
         GameMaster.difficultyMultiplier = 1;
         GameMaster.gameMaster.gameIsOn = true;
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GameMaster.endGameLocation = Random.Range(3500, 7000);
     }
 
     public void Quit()

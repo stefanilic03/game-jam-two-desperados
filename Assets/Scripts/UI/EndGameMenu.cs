@@ -11,9 +11,7 @@ public class EndGameMenu : MonoBehaviour
 
     public void StartNewRun()
     {
-        GameMaster.currentScore = 0;
-        GameMaster.difficultyMultiplier *= 2;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SetGameSettingsForATimeResetRun();
     }
 
     public void SaveHighScoreAndEnd()
@@ -22,6 +20,14 @@ public class EndGameMenu : MonoBehaviour
         {
             PlayerPrefs.SetInt(highScorePref, (int)GameMaster.currentScore);
         }
+    }
+
+    private void SetGameSettingsForATimeResetRun()
+    {
+        GameMaster.currentScore = 0;
+        GameMaster.difficultyMultiplier *= 2;
+        GameMaster.endGameLocation = Random.Range(3500, 7000);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void OnEnable()

@@ -16,6 +16,8 @@ public class GameMaster : MonoBehaviour
 
     public Player player;
 
+    public static int endGameLocation; 
+
     private void Awake()
     {
         if (gameMaster is not null && gameMaster != this) 
@@ -27,6 +29,7 @@ public class GameMaster : MonoBehaviour
         {
             gameMaster = this;
         }
+        endGameLocation = Random.Range(3500, 7000);
 
         DontDestroyOnLoad(gameObject);
     }

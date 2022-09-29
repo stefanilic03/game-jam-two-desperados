@@ -23,6 +23,6 @@ public class EnemyObjectPooling
 
     public List<Enemy> enemyPool = new List<Enemy>();
 
-    public int poolLimit = 40;
+    public int poolLimit = 80;
 
 }

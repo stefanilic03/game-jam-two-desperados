@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bc0f3f36617ffc41973558af046fe9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  death:
+  playerTakeDamage:
     m_PersistentCalls:
       m_Calls: []
   enemy: {fileID: -7427003490045510156}
@@ -130,15 +130,14 @@ MonoBehaviour:
   rigidBody2D: {fileID: 4100673686733482556}
   animator: {fileID: 4100673686733482552}
   groundCheck: {fileID: 4100673687071248247}
-  grounded: 0
+  attackIndicator: {fileID: 5282459058814267045}
   groundCheckRange: 0.2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
   attackTimer: 1
-  attackLength: 15
-  attackHeight: 17.5
-  attackIndicator: {fileID: 5282459058814267045}
+  attackLength: 10
+  attackHeight: 13.5
 --- !u!212 &4100673686733482553
 SpriteRenderer:
   m_ObjectHideFlags: 0

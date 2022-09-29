@@ -145,6 +145,7 @@ MonoBehaviour:
   sfx: {fileID: 4642366554015277117}
   spriteRenderer: {fileID: 2415785155987951742}
   redOrBlue: 1
+  numberOfPointsOnPickup: 5000
 --- !u!82 &4642366554015277117
 AudioSource:
   m_ObjectHideFlags: 0
