@@ -43,8 +43,9 @@ public class JumperAI : MonoBehaviour
 
     void ShowAttackIndicatorThenAttack()
     {   
-        if (gameObject.activeInHierarchy)
+        if (gameObject.activeInHierarchy && grounded)
         {
+            rigidBody2D.velocity = Vector2.zero;
             attackIndicator.SetActive(true);
             StartCoroutine(Attack());
         }
@@ -64,6 +65,7 @@ public class JumperAI : MonoBehaviour
         if (groundHits.Length > 0)
         {
             grounded = true;
+            
             return;
         }
         grounded = false;

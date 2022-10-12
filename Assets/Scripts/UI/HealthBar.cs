@@ -18,6 +18,10 @@ public class HealthBar : MonoBehaviour
 
     public void SetHealth(float health)
     {
+        if (health >= slider.maxValue)
+        {
+            return;
+        }
         if (slider.value > health)
         {
             StartCoroutine(HealthDepletionDelay());

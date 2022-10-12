@@ -15,15 +15,16 @@ public class PlayerController : MonoBehaviour
 
     //Check to see if the player is currently touching the ground
     public Transform groundCheck;
-    public float groundCheckSize = 0.23f;
+    public float groundCheckSize;
     public bool grounded;
     public LayerMask whatIsGround;
 
     //Jump
-    public int jumpsAvailable = 2;
+    public int jumpsAvailable = 3;
     public float jumpForce;
     public bool isFalling = false;
     public float fallFasterForce;
+    bool jumped = false;
 
     //Attacking
     public bool currentlyAttacking = false;
@@ -51,17 +52,15 @@ public class PlayerController : MonoBehaviour
         if (rigidBody2D.velocity.y < -2)
         {
             isFalling = true;
+            //Make the player fall faster so jumping feels more natural -> adds a slight curve towards the end of the jump
             rigidBody2D.AddForce(Vector2.down * fallFasterForce);
         }
 
         //If the player is holding the jetpack button, slowly deplete the jetpack fuel
         JetpackButtonHoldCheck();
 
-        //Set animation parameters
-        animator.SetBool(groundedParam, grounded);
-        animator.SetBool(isFallingParam, isFalling);
-        animator.SetBool(currentlyAttackingParam, currentlyAttacking);
-        animator.SetBool(playerHoldingTheJetpackButtonParam, playerHoldingTheJetpackButton);
+        //Animations
+        SetAnimatorParameters();
     }
 
     private void GroundCheck()
@@ -71,7 +70,10 @@ public class PlayerController : MonoBehaviour
         if (groundHits.Length > 0)
         {
             grounded = true;
-            jumpsAvailable = 2;
+            if (!jumped)
+            {
+                jumpsAvailable = 3;
+            }
         }
     }
 
@@ -89,6 +91,13 @@ public class PlayerController : MonoBehaviour
     {
         if (callbackContext.performed && jumpsAvailable > 0)
         {
+            if (grounded)
+            {
+                jumped = true;
+                StartCoroutine(JumpCounterDelay());
+            }
+
+            grounded = false;
             jumpsAvailable--;
             rigidBody2D.velocity = Vector2.up * jumpForce;
         }
@@ -119,6 +128,20 @@ public class PlayerController : MonoBehaviour
     public void StopAttacking_AnimationEvent()
     {
         currentlyAttacking = false;
+    }
+
+    private void SetAnimatorParameters()
+    {
+        animator.SetBool(groundedParam, grounded);
+        animator.SetBool(isFallingParam, isFalling);
+        animator.SetBool(currentlyAttackingParam, currentlyAttacking);
+        animator.SetBool(playerHoldingTheJetpackButtonParam, playerHoldingTheJetpackButton);
+    }
+
+    private IEnumerator JumpCounterDelay()
+    {
+        yield return new WaitForSeconds(0.1f);
+        jumped = false;
     }
 
     private void OnDrawGizmosSelected()

@@ -24,7 +24,7 @@ public class ObjectPooling
 
     public List<Platform> platformPool = new List<Platform>();
 
-    public int poolLimit = 80;
+    public int poolLimit = 120;
 
     public float middleOfABlock;
 }

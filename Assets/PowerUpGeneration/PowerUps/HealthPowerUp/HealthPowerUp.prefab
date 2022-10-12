@@ -129,6 +129,7 @@ MonoBehaviour:
   sfx: {fileID: 3914443810458028409}
   spriteRenderer: {fileID: 3769615804215846801}
   redOrBlue: 1
+  numberOfPointsOnPickup: 5000
 --- !u!58 &2403769996588634253
 CircleCollider2D:
   m_ObjectHideFlags: 0

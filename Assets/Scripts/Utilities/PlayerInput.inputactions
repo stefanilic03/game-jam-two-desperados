@@ -460,17 +460,6 @@
                 },
                 {
                     "name": "left",
-                    "id": "fcf49182-91cc-44ca-8b8b-68da8152ab80",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse;Keyboard",
-                    "action": "Navigate",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
                     "id": "0200cbaf-05aa-4d02-9cd6-93141659652f",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
